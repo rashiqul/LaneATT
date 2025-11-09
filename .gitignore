@@ -1,4 +1,29 @@
-datasets/
-experiments/
-datasets/
-experiments/
+/datasets/
+/experiments/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Training artifacts
+/tensorboard/
+/wandb/
+
+# Model checkpoints and data
+*.pt
+*.pth
+*.pkl
+*.pickle
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
