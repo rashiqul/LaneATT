@@ -35,10 +35,13 @@ class Runner:
         if not wandb.run:
             init_wandb(self.exp.name, self.cfg.__dict__)
 
-        # ✅ 定义 metric
+        # ✅ 定义 metric - properly set up x-axis for metrics
+        wandb.define_metric("epoch")  # Make epoch visible
+        wandb.define_metric("step")   # Make step visible
         wandb.define_metric("train/*", step_metric="step")
         wandb.define_metric("val/*", step_metric="epoch")
-        wandb.define_metric("epoch", hidden=True)
+        wandb.define_metric("epoch/*", step_metric="epoch")
+        wandb.define_metric("lr", step_metric="step")
 
         self.exp.train_start_callback(self.cfg)
         starting_epoch = 1
