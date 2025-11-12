@@ -62,13 +62,13 @@ datasets:
     parameters:
       S: *S
       dataset: tusimple
-      split: test
+      split: val
       img_size: [*img_h, *img_w]
       max_lanes: *max_lanes
       normalize: false
       aug_chance: 0
-      augmentations:
-      root: "datasets/tusimple-test"
+      augmentations: []
+      root: "datasets/tusimple"
 
   val:
     type: LaneDataset

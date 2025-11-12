@@ -1,4 +1,16 @@
 datasets/
 experiments/
-datasets/
-experiments/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs and tracking
+*.log
+tensorboard/
+wandb/
+
+# Testing
+test_*.yml
+temp_*.yml
