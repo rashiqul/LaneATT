@@ -47,11 +47,16 @@ class LaneATT(nn.Module):
 
         # Filter masks if `anchors_freq_path` is provided
         if anchors_freq_path is not None:
-            anchors_mask = torch.load(anchors_freq_path).cpu()
-            assert topk_anchors is not None
-            ind = torch.argsort(anchors_mask, descending=True)[:topk_anchors]
-            self.anchors = self.anchors[ind]
-            self.anchors_cut = self.anchors_cut[ind]
+            import os
+            if os.path.exists(anchors_freq_path):
+                anchors_mask = torch.load(anchors_freq_path).cpu()
+                assert topk_anchors is not None
+                ind = torch.argsort(anchors_mask, descending=True)[:topk_anchors]
+                self.anchors = self.anchors[ind]
+                self.anchors_cut = self.anchors_cut[ind]
+            else:
+                import warnings
+                warnings.warn(f"Anchors frequency file not found at {anchors_freq_path}. Using all anchors without filtering.")
 
         # Pre compute indices for the anchor pooling
         self.cut_zs, self.cut_ys, self.cut_xs, self.invalid_mask = self.compute_anchor_cut_indices(
