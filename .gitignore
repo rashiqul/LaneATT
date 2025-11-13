@@ -7,6 +7,12 @@ __pycache__/
 *$py.class
 *.so
 
+# Build artifacts
+build/
+dist/
+*.egg-info/
+*.o
+
 # Training artifacts
 /tensorboard/
 /wandb/
