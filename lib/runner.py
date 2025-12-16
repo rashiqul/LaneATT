@@ -88,7 +88,7 @@ class Runner:
                     "train/cls_loss": loss_dict_i["cls_loss"],
                     "train/reg_loss": loss_dict_i["reg_loss"],
                     "lr": optimizer.param_groups[0]["lr"],
-                    "epoch": epoch,
+                    # "epoch": epoch,
                     "step": global_step
                 })
 
@@ -189,29 +189,44 @@ class Runner:
 
     def get_train_dataloader(self):
         train_dataset = self.cfg.get_dataset('train')
-        train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
-                                                   batch_size=self.cfg['batch_size'],
-                                                   shuffle=True,
-                                                   num_workers=8,
-                                                   worker_init_fn=self._worker_init_fn_)
+        train_loader = torch.utils.data.DataLoader(
+            dataset=train_dataset,
+            batch_size=self.cfg['batch_size'],
+            shuffle=True,
+            num_workers=16,
+            pin_memory=True,
+            prefetch_factor=4,
+            persistent_workers=True,
+            worker_init_fn=self._worker_init_fn_
+        )
         return train_loader
 
     def get_test_dataloader(self):
         test_dataset = self.cfg.get_dataset('test')
-        test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
-                                                  batch_size=self.cfg['batch_size'] if not self.view else 1,
-                                                  shuffle=False,
-                                                  num_workers=8,
-                                                  worker_init_fn=self._worker_init_fn_)
+        test_loader = torch.utils.data.DataLoader(
+            dataset=test_dataset,
+            batch_size=self.cfg['batch_size'] if not self.view else 1,
+            shuffle=False,
+            num_workers=16,
+            pin_memory=True,
+            prefetch_factor=4,
+            persistent_workers=True,
+            worker_init_fn=self._worker_init_fn_
+        )
         return test_loader
 
     def get_val_dataloader(self):
         val_dataset = self.cfg.get_dataset('val')
-        val_loader = torch.utils.data.DataLoader(dataset=val_dataset,
-                                                 batch_size=self.cfg['batch_size'],
-                                                 shuffle=False,
-                                                 num_workers=8,
-                                                 worker_init_fn=self._worker_init_fn_)
+        val_loader = torch.utils.data.DataLoader(
+            dataset=val_dataset,
+            batch_size=self.cfg['batch_size'],
+            shuffle=False,
+            num_workers=16,
+            pin_memory=True,
+            prefetch_factor=4,
+            persistent_workers=True,
+            worker_init_fn=self._worker_init_fn_
+        )
         return val_loader
 
     @staticmethod
